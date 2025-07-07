@@ -2,7 +2,10 @@
 builder = "NIXPACKS"
 
 [deploy]
-startCommand = "gunicorn --bind 0.0.0.0:$PORT app:app"
-healthcheckPath = "/"
+startCommand = "gunicorn --bind 0.0.0.0:$PORT --timeout 600 --workers 1 whisper_backend_full:app"
+healthcheckPath = "/api/status"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
+
+[variables]
+PYTHONUNBUFFERED = "1"
